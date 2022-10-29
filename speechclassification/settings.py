@@ -49,6 +49,11 @@ INSTALLED_APPS = [
     'transcribe.apps.TranscribeConfig',
     'grade.apps.GradeConfig',
     'django_extensions',
+    'todo.apps.TodoConfig',
+    'widget_tweaks',
+    'rest_framework',
+    'django.contrib.sites',
+    'tugas4',
 ]
 
 MIDDLEWARE = [
@@ -100,8 +105,12 @@ WSGI_APPLICATION = 'speechclassification.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'speech_classification_django_1301194153_db',
+        'USER':'root',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -158,3 +167,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

@@ -19,8 +19,15 @@ from django.urls import include
 from django.views.generic.base import RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework import routers
+from todo.viewset_api import *
+from tugas4.views import WuaView
 
-urlpatterns = [
+router = routers.DefaultRouter()
+router.register('todo', TaskViewset)
+
+
+urlpatterns = [ 
     path('', RedirectView.as_view(url='/dashboard'), name='home'),
     path('dashboard/', include('dashboard.urls')),
     path('grade/', include('grade.urls')),
@@ -28,6 +35,9 @@ urlpatterns = [
     path('transcribe/', include('transcribe.urls')),
     path('admin/', admin.site.urls),   
     path('tugas2/', include('tugas.urls')),
+    path('todo/', include('todo.urls')),
+    path('api/', include(router.urls)),
+    path('tugas4/', WuaView.as_view(), name='wua'),
 ]
 
 if settings.DEBUG:

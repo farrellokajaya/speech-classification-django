@@ -19,41 +19,73 @@
 <!-- Start Page Content here -->
 <!-- ============================================================== -->
 
-<div class="content-page">
-    <div class="content">
+<div class="container">
+    <h1>Daftar Task</h1>
 
-        <!-- Start Content-->
-        <div class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Regular link</a></li>
-            <li><a class="dropdown-item active" href="#" aria-current="true">Active link</a></li>
-            <li><a class="dropdown-item" href="#">Another link</a></li>
+        <div>
+            {% if messages %}
+        
+              
+            {% for message in messages %}
+              
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        
+            <span aria-hidden="true">&times;</span>
+                    
+            </button>
+                    
+            {{ message | safe }}
+                
+            </div>
+                
+            {% endfor %}
+            
+            {% endif %}
+            </div>
+            
+            <!-- tombol untuk ke halaman tambah task -->
+            <div>
+                
+            <a href="{% url 'todo:create'  %}" class="btn btn-success">Tambah Baru</a>
         </div>
 
-            <div class="container-fluid">
+    <br>
 
-            {% include "base_page_title.html" %}
-
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                            <h4 class="header-title">Selamattt datang!!</h4>
-                            <p></p>
-                            <h4>Farrel Lokajaya - 1301194153</h4>
-                            <p>Tugas 2</p>
-
-                            </div> <!-- end card body-->
-                        </div> <!-- end card -->
-                    </div><!-- end col-->
-                </div>
-            <!-- end row-->
-
-            </div> <!-- container -->
-
-    </div> <!-- content -->
-
-    {% include "base_footer.html" %}
-
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th width="5%">ID</th>
+                <th width="20%">Judul</th>
+                <th width="45%">Deskripsi</th>
+                <th width="5%">Status</th>
+                <th width="20%">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+          <!-- daftar task-->
+          {% if tasks %}
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.status }}</td>
+                <td>
+                    <a href="{% url 'todo:detail' task.id %}" class="btn btn-warning btn-sm">detail</a>
+                    <a href="{% url 'todo:update' task.id %}" class="btn btn-primary btn-sm">ubah</a>
+                    <a href="{% url 'todo:delete' task.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin akan menghapus task ini?')">hapus</a>
+                </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="5">Data tidak ditemukan.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+    </table>
 </div>
 
 <!-- ============================================================== -->
